@@ -54,13 +54,21 @@ public class BirdDraw extends View {
             birdX = birdX + 10;
         else if (birdX>goalX)
             birdX = birdX -10;
+
+        if (Math.abs(birdX - goalX) <10) {
+            birdX = goalX;
+        }
+
         if (birdY < goalY)
             birdY = birdY + 10;
         else if (birdY>goalY)
             birdY = birdY - 10;
 
-        /*birdX++;
-        birdY++;*/
+        if (Math.abs(birdY - goalY) <10) {
+            birdY = goalY;
+        }
+
+        
     }
 
     @Override
