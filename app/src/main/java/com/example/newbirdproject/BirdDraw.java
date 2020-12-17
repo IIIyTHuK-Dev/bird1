@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.CountDownTimer;
+import android.view.MotionEvent;
 import android.view.View;
 
 public class BirdDraw extends View {
@@ -36,8 +37,10 @@ public class BirdDraw extends View {
     }
 
 
-    float birdX = 0;
-    float birdY = 0;
+    private float birdX = 0;
+    private float birdY = 0;
+    private float goalX = 0;
+    private float goalY = 0;
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -46,7 +49,28 @@ public class BirdDraw extends View {
         bird = Bitmap.createScaledBitmap(bird, 250,250,false);
 
         canvas.drawBitmap(bird, birdX,birdY,new Paint());
-        birdX++;
-        birdY++;
+
+        if (birdX < goalX)
+            birdX = birdX + 10;
+        else if (birdX>goalX)
+            birdX = birdX -10;
+        if (birdY < goalY)
+            birdY = birdY + 10;
+        else if (birdY>goalY)
+            birdY = birdY - 10;
+
+        /*birdX++;
+        birdY++;*/
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            goalX = event.getX();
+            goalY = event.getY();
+        }
+
+        return super.onTouchEvent(event);
     }
 }
