@@ -53,10 +53,14 @@ public class BirdDraw extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread();
         gameThread.setContext(context);
         gameThread.setSurfaceHolder(getHolder());
-
         gameThread.start();
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        gameThread.setGoal((int) event.getX(), (int) event.getY());
+        return super.onTouchEvent(event);
+    }
 
 }
 
