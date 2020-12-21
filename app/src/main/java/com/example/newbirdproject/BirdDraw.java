@@ -68,6 +68,15 @@ public class BirdDraw extends View {
             birdY = goalY;
         }
 
+        if (bird.getY() + bird.getHeight() > viewHeight) {
+            bird.setY(viewHeight - bird.getHeight());
+            bird.setVy(-bird.getVy());
+        }
+        else if (bird.getY() < 0) {
+            bird.setY(0);
+            bird.setVy(-bird.getVy());
+        }
+
         
     }
 
