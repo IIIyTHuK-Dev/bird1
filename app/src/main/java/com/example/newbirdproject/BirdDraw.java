@@ -74,6 +74,8 @@ class GameThread extends Thread {
     private float goalX = 0;
     private float goalY = 0;
     private boolean running = true;
+    private float enemyX = 0;
+    private float enemyY = 0;
 
     public void setSurfaceHolder(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
@@ -95,7 +97,12 @@ class GameThread extends Thread {
 
     @Override
     public void run() {
-        Bitmap bird = BitmapFactory.decodeResource(context.getResources(), R.drawable.bird1);
+
+        Paint paint = new Paint();
+        mario mario = new mario();
+        enemy enemy = new enemy();
+
+        Bitmap bird = BitmapFactory.decodeResource(context.getResources(), R.drawable.mario0);
         bird = Bitmap.createScaledBitmap(bird, 250, 250, false);
 
 
@@ -107,10 +114,10 @@ class GameThread extends Thread {
             Canvas canvas = surfaceHolder.lockCanvas();
 
             if (canvas != null) {
-                canvas.drawColor(Color.RED);
+                canvas.drawColor(Color.BLUE);
 
 
-                canvas.drawBitmap(bird, birdX, birdY, new Paint());
+                canvas.drawBitmap(mario.getNextMario(context), birdX, birdY, paint);
 
                 if (birdX < goalX)
                     birdX = birdX + 10;
