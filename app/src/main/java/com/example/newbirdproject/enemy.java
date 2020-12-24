@@ -7,7 +7,7 @@ import android.graphics.BitmapFactory;
 public class enemy {
     private double currentMarioNumber = 0;
 
-    public Bitmap getNextMario (Context context) {
+    public Bitmap getNextEnemy (Context context) {
 
         Bitmap enemy = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy0);
 

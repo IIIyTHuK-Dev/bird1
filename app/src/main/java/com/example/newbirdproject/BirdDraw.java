@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -74,8 +75,8 @@ class GameThread extends Thread {
     private float goalX = 0;
     private float goalY = 0;
     private boolean running = true;
-    private float enemyX = 0;
-    private float enemyY = 0;
+    private float enemyX = 650;
+    private float enemyY = 450;
 
     public void setSurfaceHolder(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
@@ -88,6 +89,16 @@ class GameThread extends Thread {
     public void setGoal(float goalX, float goalY) {
         this.goalX = goalX;
         this.goalY = goalY;
+    }
+
+    public Rect getRectForMario() {
+        Rect rect = new Rect((int) birdX, (int)birdY, (int)birdX + 200, (int)birdY + 200);
+        return rect;
+    }
+
+    public Rect getRectForEnemy() {
+        Rect rect = new Rect((int) enemyX, (int)enemyY, (int)enemyX + 200, (int)enemyY + 200);
+        return rect;
     }
 
     public void stopDraw() {
@@ -136,6 +147,14 @@ class GameThread extends Thread {
                 if (Math.abs(birdY - goalY) < 10) {
                     birdY = goalY;
                 }
+
+                canvas.drawBitmap(enemy.getNextEnemy(context), enemyX, enemyY, paint);
+
+                if (getRectForMario().intersect(getRectForEnemy())){
+                    running = false;
+                    canvas.drawText("Game over!", 300, 300, paint);
+                }
+
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
