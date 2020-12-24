@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class enemy {
-    private double currentMarioNumber = 0;
+    private double currentEnemyNumber = 0;
 
     public Bitmap getNextEnemy (Context context) {
 
         Bitmap enemy = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy0);
 
-        switch ((int)currentMarioNumber) {
+        switch ((int)currentEnemyNumber) {
             case 0:
                 enemy = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy1);
                 break;
@@ -37,10 +37,10 @@ public class enemy {
 
         enemy = Bitmap.createScaledBitmap(enemy, 200,200, false);
 
-        currentMarioNumber+=0.2;
+        currentEnemyNumber+=0.1;
 
-        if (currentMarioNumber > 2)
-            currentMarioNumber = 0;
+        if (currentEnemyNumber > 2)
+            currentEnemyNumber = 0;
 
         return enemy;
     }

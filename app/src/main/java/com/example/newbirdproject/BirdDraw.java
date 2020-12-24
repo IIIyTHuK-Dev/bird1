@@ -76,7 +76,7 @@ class GameThread extends Thread {
     private float goalY = 0;
     private boolean running = true;
     private float enemyX = 650;
-    private float enemyY = 450;
+    private float enemyY = 0;
 
     public void setSurfaceHolder(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
@@ -92,12 +92,12 @@ class GameThread extends Thread {
     }
 
     public Rect getRectForMario() {
-        Rect rect = new Rect((int) birdX, (int)birdY, (int)birdX + 200, (int)birdY + 200);
+        Rect rect = new Rect((int) birdX, (int)birdY, (int)birdX + 120, (int)birdY + 200);
         return rect;
     }
 
     public Rect getRectForEnemy() {
-        Rect rect = new Rect((int) enemyX, (int)enemyY, (int)enemyX + 200, (int)enemyY + 200);
+        Rect rect = new Rect((int) enemyX, (int)enemyY, (int)enemyX + 100, (int)enemyY + 100);
         return rect;
     }
 
@@ -150,9 +150,26 @@ class GameThread extends Thread {
 
                 canvas.drawBitmap(enemy.getNextEnemy(context), enemyX, enemyY, paint);
 
+                if (enemyX < goalX)
+                    enemyX = enemyX + 5;
+                else if (enemyX > goalX)
+                    enemyX = enemyX - 5;
+
+                if (Math.abs(enemyX - goalX) < 5) {
+                    enemyX = goalX;
+                }
+                if (enemyY < goalY)
+                    enemyY = enemyY + 5;
+                else if (enemyY > goalY)
+                    enemyY = enemyY - 5;
+
+                if (Math.abs(enemyY - goalY) < 5) {
+                    enemyY = goalY;
+                }
+
                 if (getRectForMario().intersect(getRectForEnemy())){
                     running = false;
-                    canvas.drawText("Game over!", 300, 300, paint);
+                    canvas.drawText("Game over!", 600, 600, paint);
                 }
 
                 surfaceHolder.unlockCanvasAndPost(canvas);
